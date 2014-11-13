@@ -1,0 +1,7 @@
+design/
+
+npm-debug.log
+Vagrantfile
+
+.vagrant
+.DS_Store
