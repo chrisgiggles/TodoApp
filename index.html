@@ -9,26 +9,22 @@
 <body>
 <div class="wrapper">
 	<form action="#" data-bind="submit: addTask">
-		<input type="text" id="text-field" data-bind="value: textField" placeholder="Type your tasks here!">
+		<input type="text" placeholder="Type your tasks here!" 
+				id="text-field" data-bind="value: textField">
 	</form>
 
 	<ul class="tasklist" data-bind="foreach: tasks">
-		<li data-bind="attr: {'data-id': id}, css: taskStatus">
-
-
+		<li data-bind="attr: {'data-id': id}, css: $root.taskStatus">
 			<input type="checkbox" data-bind="checked: isDone">
 			<input type="text" data-bind="value: task, disable: isDone">
-			<button data-bind="click: $root.removeTask">X</button>
+			<a href="#" data-bind="click: $root.removeTask">x</a>
 		</li>
 	</ul>
 	<p class="stats" data-bind="visible: tasks().length > 0">
-		<span data-bind="text: completion().length"></span>
-		of 
-		<span data-bind="text: tasks().length"></span>
+		<span data-bind="text: completion"></span>
 	</p>
 <div>
 </body>
-<script src="js/jquery-2.1.1.js"></script>
 <script src="js/knockout-3.2.0.js"></script>
 <script src="js/app.js"></script>
 </html>

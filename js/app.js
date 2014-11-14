@@ -5,12 +5,6 @@ var Task = function(task, status, id) {
 	self.isDone = ko.observable(false);
 	self.id 	= id;
 
-	self.taskStatus = ko.computed(function() {
-		var isDone = self.isDone(); 
-		if (isDone === true) {
-			return "task-done"
-		}
-	});
 };
 
 var TaskViewModel = function() {
@@ -24,10 +18,14 @@ var TaskViewModel = function() {
 
 	self.addTask = function() {
 		self.id += 1;
-		if (self.textField() != "") {
+		if (self.textField().trim() != "") {
 			self.tasks.push(new Task(self.textField(), false, self.id));
-			$("form #text-field").val("").focus();
+			self.textField("");
 		}
+		else {
+			self.textField("");
+		}
+		console.log(self.tasks());
 	};
 
 	self.removeTask = function() {
@@ -42,13 +40,39 @@ var TaskViewModel = function() {
 		}
 	};
 	
-	self.completion = ko.computed(function() {
-		return ko.utils.arrayFilter(self.tasks(), function(task) { return task.isDone() });
+	this.taskStatus = ko.computed(function() {
+		for (var i = 0; i < self.tasks().length; i++) {
+			var isDone = self.tasks()[i].isDone();
+			console.log(isDone);
+			if (isDone === true) {
+				return "task-done";
+			}
+		}
 	});
 	
-	self.animateDone = function(elem) {
-		$(elem).slideUp();
-	}
+	self.completion = ko.computed(function() {
+		var isDoneList = ko.utils.arrayFilter(self.tasks(), function(task) {
+			return task.isDone();
+		});
+		return "" + isDoneList.length + " of " + self.tasks().length + " tasks completed";
+	});
 };
 
 ko.applyBindings(new TaskViewModel());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
