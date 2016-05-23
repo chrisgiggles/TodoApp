@@ -10,12 +10,14 @@ var Task = function(task, status, id) {
 			return "task-done"
 		}
 	});
-
 };
 
 var TaskViewModel = function() {
 	var self = this;
+
 	self.tasks = ko.observableArray([]);
+
+	self.filter = ko.observable('all');
 
 	self.textField = ko.observable();
 
@@ -30,7 +32,7 @@ var TaskViewModel = function() {
 		else {
 			self.textField("");
 		}
-		console.log(self.tasks());
+		//console.log(self.filteredTasks()[0].task());
 	};
 
 	self.removeTask = function() {
@@ -44,15 +46,29 @@ var TaskViewModel = function() {
 			i++;
 		}
 	};
+
+	self.setFilter = function(data, event) {
+		self.filter(event.target.dataset.filter);
+	}
 	
+	self.filterTasks = ko.computed(function() {
+		var tasks = ko.utils.arrayFilter(self.tasks(), function(task) {
+			if (self.filter() == 'all') {
+				return task;
+			} else if (self.filter() == 'active') {
+				return !task.isDone();
+			} else if (self.filter() == 'completed') {
+				return task.isDone();
+			}
+		});
+		return ko.observable(tasks);
+	});
+
 	self.completion = ko.computed(function() {
 		var isDoneList = ko.utils.arrayFilter(self.tasks(), function(task) {
 			return task.isDone();
 		});
-		return isDoneList.length + 
-				" of " + 
-				self.tasks().length + 
-				" tasks completed";
+		return isDoneList.length + " of " + self.tasks().length + " tasks completed";
 	});
 };
 

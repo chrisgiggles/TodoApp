@@ -5,3 +5,5 @@ Vagrantfile
 
 .vagrant
 .DS_Store
+
+.idea

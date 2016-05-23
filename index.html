@@ -9,23 +9,30 @@
 <body>
 <div class="wrapper">
 	<form action="#" data-bind="submit: addTask">
-		<input type="text" placeholder="Type your tasks here!" 
-				id="text-field" data-bind="value: textField">
+		<div class="form-wrapper">
+			<input type="text" placeholder="Type your tasks here!" 
+				id="text-field" class="text-field" data-bind="value: textField">
+			<input type="submit" value="Submit"/>
+		</div>
 	</form>
 
-	<ul class="tasklist" data-bind="foreach: tasks">
+	<ul class="tasklist" data-bind="foreach: filterTasks()">
 		<li data-bind="attr: {'data-id': id}, css: taskStatus()">
 			<input type="checkbox" data-bind="checked: isDone">
 			<input type="text" data-bind="value: task, disable: isDone">
-			<button href="#" data-bind="click: $root.removeTask, visible: isDone() === false">x</button>
+			<button data-bind="click: $root.removeTask, visible: isDone() === false">x</button>
 		</li>
 	</ul>
+	<div class="view-filter">
+		<a href="#" data-filter="all" data-bind="click: setFilter">View All</a>
+		<a href="#" data-filter="active" data-bind="click: setFilter">View Active</a>
+		<a href="#" data-filter="completed" data-bind="click: setFilter">View Completed</a>
+	</div>
 	<p class="stats" data-bind="visible: tasks().length > 0">
 		<span data-bind="text: completion"></span>
 	</p>
 <div>
 </body>
-<script src="js/knockout-3.2.0.js"></script>
-<script src="js/listview.js"></script>
+<script src="js/knockout-3.4.0.js"></script>
 <script src="js/app.js"></script>
 </html>
