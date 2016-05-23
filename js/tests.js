@@ -41,3 +41,30 @@ QUnit.test('Text Field is emptied after adding a task', function() {
 
 	equal(vm.textField(), '');
 });
+
+QUnit.module('TaskViewModel.isDone');
+
+QUnit.test('Sets isDone to true', function() {
+	var vm = getFreshVM();
+	vm.textField("A new task");
+	vm.addTask();
+	vm.tasks()[0].isDone(true);
+	equal(vm.tasks()[0].isDone(), true);
+});
+
+QUnit.test('toggles isDone', function() {
+	var vm = getFreshVM();
+	vm.textField("A new task");
+	vm.addTask();
+	vm.tasks()[0].isDone(true);
+	vm.tasks()[0].isDone(false);
+	equal(vm.tasks()[0].isDone(), false);
+});
+
+QUnit.test('Sets css class task-done when isDone is true', function() {
+	var vm = getFreshVM();
+	vm.textField("A new task");
+	vm.addTask();
+	vm.tasks()[0].isDone(true);
+	equal(vm.tasks()[0].taskStatus(), 'task-done');
+});
