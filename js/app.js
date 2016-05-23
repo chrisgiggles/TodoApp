@@ -4,7 +4,7 @@ var Task = function(task, status, id) {
 	self.task   = ko.observable(task);
 	self.isDone = ko.observable(false);
 	self.id 	= id;
-	
+
 	self.taskStatus = ko.computed(function() {
 		if (self.isDone() === true) {
 			return "task-done"
@@ -32,7 +32,6 @@ var TaskViewModel = function() {
 		else {
 			self.textField("");
 		}
-		//console.log(self.filteredTasks()[0].task());
 	};
 
 	self.removeTask = function() {
@@ -50,7 +49,7 @@ var TaskViewModel = function() {
 	self.setFilter = function(data, event) {
 		self.filter(event.target.dataset.filter);
 	}
-	
+
 	self.filterTasks = ko.computed(function() {
 		var tasks = ko.utils.arrayFilter(self.tasks(), function(task) {
 			if (self.filter() == 'all') {
